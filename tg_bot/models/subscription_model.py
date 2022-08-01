@@ -15,5 +15,5 @@ class SubscriptionModel:
         return result
 
     def subscribe_user(self, user_identifier, subscribe):
-        self.connection
+        # self.connection.
         pass

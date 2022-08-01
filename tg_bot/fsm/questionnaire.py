@@ -5,7 +5,9 @@ from aiogram.types import Message
 from loguru import logger
 
 # timeframes = ['1m', '5m', '15m', '30m', '1h', '4h', '1d']
+from tg_bot.misc.entity import Subscription
 from tg_bot.services import UsersService
+
 users_service = UsersService()
 
 timeframes = {'1m': 'не задано',
@@ -22,6 +24,7 @@ percents = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
 class FSMSubscribesAdmin(StatesGroup):
     waiting_market = State()
+    waiting_type_market = State()
     waiting_signal = State()
     waiting_timeframes = State()
     waiting_percent = State()
@@ -29,6 +32,8 @@ class FSMSubscribesAdmin(StatesGroup):
 
 async def subscription(message: Message):
     users_service.get_subscribing_user(message.from_user)
+    subscription = Subscription(market=['', ''], type_market='222', signal='333', timeframes={'1': 222})
+    print(subscription)
 
     keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True)
 

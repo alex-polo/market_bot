@@ -1,4 +1,5 @@
 # Режим работы бота (polling или webhook)
+#bot_status = 'webhook'
 bot_status = 'polling'
 
 # Путь базы sqlite
@@ -15,7 +16,7 @@ logger_dir = 'logs'
 logger_filename = 'server.log'
 logger_format = '{time} {level} {message}'
 logger_level = 'DEBUG'
-logger_rotation = '5 KB'
+logger_rotation = '100 MB'
 logger_compression = 'zip'
 
 # Название программы и версия

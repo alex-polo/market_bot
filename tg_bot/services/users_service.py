@@ -1,17 +1,22 @@
 import aiogram
 
-from tg_bot.models import UsersModel
+from tg_bot.models import UsersModel, SubscriptionModel
 
 
 class UsersService:
 
     def __init__(self) -> None:
+        self.subscription_model = None
         self.users = None
         self.admins_ids = None
 
     def set_parameters(self, connection, admins: list):
         self.users = UsersModel(connection)
+        self.subscription_model = SubscriptionModel(connection)
         self.admins_ids = admins
+
+    def get_subscribing_user(self, telegram_user: aiogram.types.user.User):
+        self.subscription_model.get_subscribing(telegram_user.id)
 
     def adding_user_or_set_active_status(self, telegram_user: aiogram.types.user.User) -> None:
         """
@@ -37,6 +42,7 @@ class UsersService:
         pass
 
     def count_active_users(self):
+        print('count_active_users')
         pass
 
     def get_identifier_all_active_users(self) -> list:

@@ -5,6 +5,9 @@ from aiogram.types import Message
 from loguru import logger
 
 # timeframes = ['1m', '5m', '15m', '30m', '1h', '4h', '1d']
+from tg_bot.services import UsersService
+users_service = UsersService()
+
 timeframes = {'1m': 'не задано',
               '5m': 'не задано',
               '15m': 'не задано',
@@ -25,7 +28,10 @@ class FSMSubscribesAdmin(StatesGroup):
 
 
 async def subscription(message: Message):
+    users_service.get_subscribing_user(message.from_user)
+
     keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True)
+
     for market in markets:
         keyboard.add(market)
     await message.answer("Выберите рынок:", reply_markup=keyboard)
@@ -49,12 +55,15 @@ async def detect_market(message: Message, state: FSMContext):
     await message.answer("Выберете сигнал:", reply_markup=keyboard)
     await FSMSubscribesAdmin.waiting_signal.set()
 
+
 def _keyboard_select_timeframes():
     keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True)
     buttons = [f'{tm_key} | {tm_value}' for tm_key, tm_value in timeframes.items()]
     buttons.append('Продолжить')
     keyboard.add(*buttons)
     return keyboard
+
+
 async def detect_signal(message: Message, state: FSMContext):
     if message.text not in signals:
         await message.answer('Пожалуйста, выберите значение ниже:')
@@ -107,7 +116,10 @@ async def detect_percent(message: Message, state: FSMContext):
     await FSMSubscribesAdmin.waiting_timeframes.set()
 
 
-def register_fsm_admin_questionnaire(dp: Dispatcher):
+def register_fsm_admin_questionnaire(dp: Dispatcher, u_service: UsersService):
+    global users_service
+    users_service = u_service
+
     dp.register_message_handler(subscription, commands=["subscription"], state='*', is_admin=True)
     dp.register_message_handler(detect_market, state=FSMSubscribesAdmin.waiting_market)
     dp.register_message_handler(detect_signal, state=FSMSubscribesAdmin.waiting_signal)

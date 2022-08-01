@@ -32,8 +32,8 @@ def _register_handlers(dispatcher: Dispatcher, users_service: UsersService):
     # register_user(dispatcher, users_service)
 
 
-def _register_fsm_questionnaire(dispatcher: Dispatcher):
-    register_fsm_admin_questionnaire(dispatcher)
+def _register_fsm_questionnaire(dispatcher: Dispatcher, users_service: UsersService):
+    register_fsm_admin_questionnaire(dispatcher, users_service)
 
 
 async def background_task(dispatcher: Dispatcher):
@@ -83,7 +83,7 @@ def _main(db_config: DbConfig, redis_config: RedisConfig, tg_bot_config: TgBot):
     _register_filters(dispatcher=dispatcher)
 
     logger.debug('Register FSM questionnaire')
-    _register_fsm_questionnaire(dispatcher=dispatcher)
+    _register_fsm_questionnaire(dispatcher=dispatcher, users_service=users_service)
 
     logger.debug('Register handlers tg_bot')
     _register_handlers(dispatcher=dispatcher, users_service=users_service)

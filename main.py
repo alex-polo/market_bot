@@ -3,8 +3,8 @@ from multiprocessing import Process
 
 from loguru import logger
 
-from tgbot import start_tg_bot
 from config import Config
+from tg_bot import start_tg_bot
 
 
 async def worker_bg(pipe):

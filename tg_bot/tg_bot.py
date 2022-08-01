@@ -7,13 +7,14 @@ from aiogram.contrib.fsm_storage.memory import MemoryStorage
 from aiogram.utils import executor
 from config import TgBot, DbConfig, RedisConfig
 from tg_bot.filters import AdminFilter
+from tg_bot.fsm.questionnaire import register_fsm_admin_questionnaire
 from tg_bot.handlers import register_admin
-from tg_bot.handlers.fsm.fsm_questionnaire import register_fsm_admin_questionnaire
+# from tg_bot.handlers.fsm.fsm_questionnaire import register_fsm_admin_questionnaire
 from tg_bot.services import UsersService
-from tg_bot.services.backend_consumer_service import BackendConsumer
+# from tg_bot.services.backend_consumer_service import BackendConsumer
 
 mailing_service = None
-backed_consumer = None
+# backed_consumer = None
 
 
 def _create_users_service(db_connection: sqlite3.Connection, tg_bot_config: TgBot) -> UsersService:
@@ -45,7 +46,7 @@ async def run_background(dispatcher: Dispatcher):
     """Тут у нас запускается функция рассылки соообщений"""
     logger.debug('Telegram bot started')
     asyncio.create_task(background_task(dispatcher.bot))
-    asyncio.create_task(backed_consumer.listener())
+    # asyncio.create_task(backed_consumer.listener())
     # asyncio.create_task(mailing_service.sending_message(background_queue))
 
 
@@ -75,8 +76,8 @@ def _main(db_config: DbConfig, redis_config: RedisConfig, tg_bot_config: TgBot):
     # global mailing_service
     # mailing_service = MailingService(bot=bot, users_s=users_service, delay=1)
 
-    global backed_consumer
-    backed_consumer = BackendConsumer(redis_config=redis_config)
+    # global backed_consumer
+    # backed_consumer = BackendConsumer(redis_config=redis_config)
 
     logger.debug('Register filters tg_bot')
     _register_filters(dispatcher=dispatcher)

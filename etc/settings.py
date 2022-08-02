@@ -8,8 +8,7 @@ database_path = 'data/database.db'
 # Настройки Redis
 redis_hostname = '89.108.103.38'
 redis_port = 6379
-redis_background_database = 0
-redis_tg_bot_database = 1
+redis_database = 0
 
 # Логирование
 logger_dir = 'logs'

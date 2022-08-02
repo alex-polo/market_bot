@@ -2,8 +2,7 @@ from etc.settings import bot_status
 from etc.settings import database_path
 from etc.settings import redis_hostname
 from etc.settings import redis_port
-from etc.settings import redis_background_database
-from etc.settings import redis_tg_bot_database
+from etc.settings import redis_database
 from etc.settings import logger_dir
 from etc.settings import logger_filename
 from etc.settings import logger_format

@@ -50,10 +50,6 @@ async def run_background(dispatcher: Dispatcher):
     # asyncio.create_task(mailing_service.sending_message(background_queue))
 
 
-def _shutdown():
-    pass
-
-
 def _main(db_config: DbConfig, redis_config: RedisConfig, tg_bot_config: TgBot):
     logger.debug('Starting telegram bot ...')
     logger.debug('Create memory storage')
@@ -91,5 +87,5 @@ def _main(db_config: DbConfig, redis_config: RedisConfig, tg_bot_config: TgBot):
     executor.start_polling(dispatcher, skip_updates=True, on_startup=run_background)
 
 
-def start_tg_bot(db_config: DbConfig, redis_config: RedisConfig, tg_bot_config: TgBot):
+def run(db_config: DbConfig, redis_config: RedisConfig, tg_bot_config: TgBot):
     _main(db_config=db_config, redis_config=redis_config, tg_bot_config=tg_bot_config)

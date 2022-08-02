@@ -2,8 +2,7 @@ from dataclasses import dataclass
 from environs import Env
 
 from etc import database_path, logger_dir, logger_filename, logger_format, logger_level, logger_rotation, \
-    logger_compression, app_name, app_version, redis_hostname, redis_port, redis_background_database, \
-    redis_tg_bot_database
+    logger_compression, app_name, app_version, redis_hostname, redis_port, redis_database
 
 
 @dataclass
@@ -28,8 +27,7 @@ class RedisConfig:
     hostname: str
     port: int
     password: str
-    background_database: int
-    tg_bot_database: int
+    database: int
 
 
 @dataclass
@@ -69,8 +67,7 @@ def load_config(path):
             hostname=redis_hostname,
             port=redis_port,
             password=env.str("REDIS_PASSWORD"),
-            background_database=redis_background_database,
-            tg_bot_database=redis_tg_bot_database
+            database=redis_database
         ),
         logger_config=LoggerConfig(
             logger_dir=logger_dir,

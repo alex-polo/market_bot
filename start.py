@@ -2,7 +2,7 @@ from loguru import logger
 import os
 import traceback
 from config import load_config, LoggerConfig
-from main import start_main
+from app import start_main
 
 
 def configure_logger(config: LoggerConfig):
@@ -21,10 +21,11 @@ def _main():
         configure_logger(config.logger_config)
         logger.info(f'{config.app_attr.name} starting, app version: {config.app_attr.version}')
         start_main(config=config)
+    except KeyboardInterrupt:
+        logger.warning('Приложение остановлено пользователем.')
     except Exception as error:
         logger.error(traceback.format_exc(limit=None, chain=True))
         logger.error(error)
-    logger.warning('Exit')
 
 
 if __name__ == '__main__':

@@ -1,0 +1,1 @@
+from backend.services.consumer_service import ConsumerService

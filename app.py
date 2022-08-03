@@ -20,4 +20,5 @@ def start_main(config: Config):
     backend_process = Process(target=backend.run, args=(config.redis_config,))
     backend_process.start()
 
-    backend_process.join()
+    tg_bot_process.join()
+    # backend_process.join()
